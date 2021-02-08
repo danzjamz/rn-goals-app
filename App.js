@@ -1,44 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import GoalInput from './components/goalInput';
+import GoalItem from './components/goalItem';
 
 export default function App() {
-  const [newGoal, setNewGoal] = useState('');
   const [goals, setGoals] = useState([]);
 
-  const onAddGoal = () => {
+  const onAddGoal = (newGoal) => {
     setGoals(goals => [...goals, { key: Math.random().toString(), value: newGoal}]);
-    setNewGoal('');
   }
 
 
   return (
     <View style={styles.container}>
-      <View style={styles.wrapper}>
-        <TextInput 
-          style={styles.input} 
-          placeholder='new goal' 
-          value={newGoal}
-          onChangeText={ (text) => setNewGoal(text)} 
-        />
-        <Button title='ADD' style={styles.btn} onPress={ onAddGoal } />
-      </View>
+      <GoalInput addGoal={ onAddGoal } />
       <FlatList
         contentContainerStyle={styles.listWrapper}
         data={goals} 
         renderItem={itemData => (
-          <View style={styles.listItem}>
-            <Text>{ itemData.item.value }</Text>
-          </View>
+          <GoalItem title={itemData.item.value} />
         )}  
       />
-      {/* <ScrollView contentContainerStyle={styles.listWrapper}>
-        { goals.map(goal => {
-          return (
-
-          )
-        })}
-      </ScrollView> */}
     </View>
   );
 }
