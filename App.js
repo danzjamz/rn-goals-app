@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [newGoal, setNewGoal] = useState('');
   const [goals, setGoals] = useState([]);
 
   const onAddGoal = () => {
-    setGoals(goals => [...goals, newGoal]);
+    setGoals(goals => [...goals, { key: Math.random().toString(), value: newGoal}]);
     setNewGoal('');
   }
 
@@ -23,15 +23,22 @@ export default function App() {
         />
         <Button title='ADD' style={styles.btn} onPress={ onAddGoal } />
       </View>
-      <ScrollView contentContainerStyle={styles.listWrapper}>
+      <FlatList
+        contentContainerStyle={styles.listWrapper}
+        data={goals} 
+        renderItem={itemData => (
+          <View style={styles.listItem}>
+            <Text>{ itemData.item.value }</Text>
+          </View>
+        )}  
+      />
+      {/* <ScrollView contentContainerStyle={styles.listWrapper}>
         { goals.map(goal => {
           return (
-            <View key={goal} style={styles.listItem}>
-              <Text>{ goal }</Text>
-            </View>
+
           )
         })}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }
@@ -51,7 +58,7 @@ const styles = StyleSheet.create({
   },
   listWrapper: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingTop: '10px',
     width: '100%',
   },
@@ -61,6 +68,7 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   listItem: {
+    alignSelf: 'center',
     padding: 10,
     margin: 5,
     width: '80%',
