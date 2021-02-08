@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default function GoalItem({title}) {
+export default function GoalItem({goal, onDelete}) {
 
   return (
-    <View style={styles.listItem}>
-        <Text>{ title }</Text>
-    </View>
+    <TouchableOpacity activeOpacity={.8} onPress={ () => onDelete(goal.key) }>
+        <View style={styles.listItem}>
+            <Text>{ goal.value }</Text>
+        </View>
+    </TouchableOpacity>
   );
 }
 

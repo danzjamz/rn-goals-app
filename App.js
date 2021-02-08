@@ -5,10 +5,16 @@ import GoalInput from './components/goalInput';
 import GoalItem from './components/goalItem';
 
 export default function App() {
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState([{ key: Math.random().toString(), value: 'hi'}, { key: Math.random().toString(), value: 'howdy'}]);
 
   const onAddGoal = (newGoal) => {
     setGoals(goals => [...goals, { key: Math.random().toString(), value: newGoal}]);
+  }
+
+  const onDeleteGoal = (goalKey) => {
+    const newGoals = goals.filter(goal => goal.key !== goalKey);
+    console.log(newGoals, goalKey)
+    setGoals(newGoals);
   }
 
 
@@ -19,7 +25,7 @@ export default function App() {
         contentContainerStyle={styles.listWrapper}
         data={goals} 
         renderItem={itemData => (
-          <GoalItem title={itemData.item.value} />
+          <GoalItem goal={itemData.item} onDelete={onDeleteGoal} />
         )}  
       />
     </View>
