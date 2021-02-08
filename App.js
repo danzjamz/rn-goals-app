@@ -6,6 +6,7 @@ import GoalItem from './components/goalItem';
 
 export default function App() {
   const [goals, setGoals] = useState([{ key: Math.random().toString(), value: 'hi'}, { key: Math.random().toString(), value: 'howdy'}]);
+  const [isAddOpen, setIsAddOpen] = useState(false);
 
   const onAddGoal = (newGoal) => {
     setGoals(goals => [...goals, { key: Math.random().toString(), value: newGoal}]);
@@ -20,7 +21,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <GoalInput addGoal={ onAddGoal } />
+      <Button title='Add New Goal' onPress={ () => setIsAddOpen(!isAddOpen) } /> 
+      <GoalInput visible={isAddOpen} addGoal={ onAddGoal } />
       <FlatList
         contentContainerStyle={styles.listWrapper}
         data={goals} 
