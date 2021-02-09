@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Modal } from 'react-native';
 
-export default function GoalInput({ addGoal, visible }) {
+export default function GoalInput({ addGoal, visible, onCancel }) {
   const [newGoal, setNewGoal] = useState('');
 
   const onAddGoal =() => {
     addGoal(newGoal);
     setNewGoal('');
+  }
+  const onCancelGoal =() => {
+    setNewGoal('');
+    onCancel(newGoal);
   }
 
   return (
@@ -19,6 +23,7 @@ export default function GoalInput({ addGoal, visible }) {
                 onChangeText={ (text) => setNewGoal(text)} 
             />
             <Button title='ADD' style={styles.btn} onPress={ onAddGoal } />
+            <Button title='Cancel' style={styles.btn} onPress={ onCancelGoal } color='red' />
         </View>
     </Modal>
   );

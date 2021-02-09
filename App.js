@@ -10,6 +10,11 @@ export default function App() {
 
   const onAddGoal = (newGoal) => {
     setGoals(goals => [...goals, { key: Math.random().toString(), value: newGoal}]);
+    setIsAddOpen(false);
+  }
+
+  const onCancelAdd = () => {
+    setIsAddOpen(false);
   }
 
   const onDeleteGoal = (goalKey) => {
@@ -22,7 +27,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Button title='Add New Goal' onPress={ () => setIsAddOpen(!isAddOpen) } /> 
-      <GoalInput visible={isAddOpen} addGoal={ onAddGoal } />
+      <GoalInput visible={isAddOpen} addGoal={ onAddGoal } onCancel={onCancelAdd} />
       <FlatList
         contentContainerStyle={styles.listWrapper}
         data={goals} 
@@ -66,9 +71,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     borderColor: 'black',
     borderWidth: 1
-  },
-  btn: {
-    backgroundColor: '#628c0d',
-    fontWeight: 600
   }
 });
